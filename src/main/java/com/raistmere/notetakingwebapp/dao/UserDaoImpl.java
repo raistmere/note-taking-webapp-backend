@@ -1,6 +1,6 @@
 package com.raistmere.notetakingwebapp.dao;
 
-import com.raistmere.notetakingwebapp.model.User;
+import com.raistmere.notetakingwebapp.model.UserModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,33 +25,49 @@ public class UserDaoImpl implements UserDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // should only select one user at a time (if not then there is a duplicate username in the DB)
     @Override
-    public User getUserByUsername(String username) {
+    public UserModel getUserByUsername(String username) {
 
-        return null;
+        String sql = "SELECT * FROM users WHERE name = ?";
+
+        RowMapper<UserModel> rowMapper = (rs, rowNum) -> {
+
+            UserModel userModel = new UserModel();
+            userModel.setId(rs.getLong("id"));
+            userModel.setName(rs.getString("name"));
+            userModel.setPassword(rs.getString("password"));
+
+            return userModel;
+        };
+
+        List<UserModel> userModelList = jdbcTemplate.query(sql, rowMapper, username);
+
+        return !userModelList.isEmpty() ? userModelList.getFirst() : null;
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserModel> getAllUsers() {
 
         String sql = "select * from users";
 
-        RowMapper<User> rowMapper = new RowMapper<User>() {
+        RowMapper<UserModel> rowMapper = new RowMapper<UserModel>() {
 
 
             @Override
-            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public UserModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-                User user = new User();
-                user.setId(rs.getLong("id"));
-                user.setName(rs.getString("name"));
+                UserModel userModel = new UserModel();
+                userModel.setId(rs.getLong("id"));
+                userModel.setName(rs.getString("name"));
+                userModel.setPassword(rs.getString("password"));
 
-                return user;
+                return userModel;
             }
         };
 
-        List<User> userList = jdbcTemplate.query(sql, rowMapper);
+        List<UserModel> userModelList = jdbcTemplate.query(sql, rowMapper);
 
-        return userList;
+        return userModelList;
     }
 }

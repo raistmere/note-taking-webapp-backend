@@ -15,6 +15,7 @@ public class NoteTakingWebappApplication {
 		UserDaoImpl userDao = (UserDaoImpl) context.getBean(UserDaoImpl.class);
 
 		System.out.println(userDao.getAllUsers());
+		System.out.println(userDao.getUserByUsername("bunny"));
 	}
 
 }

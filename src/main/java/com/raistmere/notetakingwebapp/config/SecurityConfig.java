@@ -1,5 +1,7 @@
 package com.raistmere.notetakingwebapp.config;
 
+import com.raistmere.notetakingwebapp.dao.UserDaoImpl;
+import com.raistmere.notetakingwebapp.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -67,28 +69,34 @@ public class SecurityConfig {
         return source;
     }
 
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//
+//        // create an inMemory manager that keeps track of all users (good for testing/dev stage)
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//
+//        // create a new user object that will hold the test user data for development use
+//        User newUser = new User(
+//                "user",
+//                "$2a$12$b9Hk7u7x68TNA4RTYgS8ZO9P1pzbCIBpHOc8.prBbpsF5nN6cdJwi",
+//                true,
+//                true,
+//                true,
+//                true,
+//                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+//        );
+//
+//        // add that user to the inMemory manager so we can use it
+//        manager.createUser(newUser);
+//
+//        // now we can use the manager and login using the new user(s).
+//        return manager;
+//    }
+
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService customUserDetailsService(UserDaoImpl userDaoImpl) {
 
-        // create an inMemory manager that keeps track of all users (good for testing/dev stage)
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-
-        // create a new user object that will hold the test user data for development use
-        User newUser = new User(
-                "user",
-                "$2a$12$b9Hk7u7x68TNA4RTYgS8ZO9P1pzbCIBpHOc8.prBbpsF5nN6cdJwi",
-                true,
-                true,
-                true,
-                true,
-                List.of(new SimpleGrantedAuthority("ROLE_USER"))
-        );
-
-        // add that user to the inMemory manager so we can use it
-        manager.createUser(newUser);
-
-        // now we can use the manager and login using the new user(s).
-        return manager;
+        return new CustomUserDetailsService(userDaoImpl);
     }
 
     @Bean
@@ -96,6 +104,4 @@ public class SecurityConfig {
 
         return new BCryptPasswordEncoder();
     }
-
-
 }

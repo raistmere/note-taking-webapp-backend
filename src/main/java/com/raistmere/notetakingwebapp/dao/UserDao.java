@@ -1,12 +1,12 @@
 package com.raistmere.notetakingwebapp.dao;
 
-import com.raistmere.notetakingwebapp.model.User;
+import com.raistmere.notetakingwebapp.model.UserModel;
 
 import java.util.List;
 
 public interface UserDao {
 
-    User getUserByUsername(String username);
+    UserModel getUserByUsername(String username);
 
-    List<User> getAllUsers();
+    List<UserModel> getAllUsers();
 }

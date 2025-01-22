@@ -1,12 +1,18 @@
 package com.raistmere.notetakingwebapp.model;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class User {
+public class UserModel {
 
     private Long id;
     private String name;
+    private String password;
+
+    public UserModel() {}
+
+    public UserModel(Long id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -24,11 +30,20 @@ public class User {
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
