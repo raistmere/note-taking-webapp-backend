@@ -6,8 +6,9 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS Notes (
     id int PRIMARY KEY,
-    userID int,
+    userId int,
+    title VARCHAR(50),
     note TEXT,
-    FOREIGN KEY (userID) REFERENCES Users(id)
+    FOREIGN KEY (userId) REFERENCES Users(id)
         ON DELETE CASCADE
 );

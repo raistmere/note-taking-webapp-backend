@@ -36,6 +36,8 @@ public class NoteDaoImpl implements NoteDao {
 
                 // apply the ResultSet to note fields
                 note.setId(rs.getInt("id"));
+                note.setUserId(rs.getInt("userID"));
+                note.setTitle(rs.getString("title"));
                 note.setNote(rs.getString("note"));
 
                 return note;

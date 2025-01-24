@@ -5,6 +5,7 @@ public class NoteModel {
     private int id;
 
     private int userId;
+    private String title;
     private String note;
 
     public NoteModel() {}
@@ -31,6 +32,14 @@ public class NoteModel {
         this.userId = userId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getNote() {
         return note;
     }
@@ -38,6 +47,7 @@ public class NoteModel {
     public void setNote(String note) {
         this.note = note;
     }
+
 
     @Override
     public String toString() {
