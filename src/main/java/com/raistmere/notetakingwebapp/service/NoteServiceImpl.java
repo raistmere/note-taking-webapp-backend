@@ -23,7 +23,23 @@ public class NoteServiceImpl implements NoteService {
         // Get all notes from the database based on the userID
         List<NoteModel> noteList = noteDao.getAllNotesFromUserID(userID);
 
-        // return notelist to the controller
+        // return note list to the controller
         return noteList;
+    }
+
+    @Override
+    public String createNote(NoteModel note, Long userID) {
+
+        // use DAO to save note to database
+        try {
+
+            noteDao.saveNote(note, userID);
+            System.out.println("Note has been created");
+            return "Note has been created";
+        } catch (Exception e) {
+
+            System.out.println("There has been an error creating the note");
+            return "There has been an error creating the note";
+        }
     }
 }

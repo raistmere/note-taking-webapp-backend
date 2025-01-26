@@ -4,13 +4,13 @@ public class NoteModel {
 
     private int id;
 
-    private int userId;
+    private Long userId;
     private String title;
     private String note;
 
     public NoteModel() {}
 
-    public NoteModel(int id, int userId, String note) {
+    public NoteModel(int id, Long userId, String note) {
         this.id = id;
         this.userId = userId;
         this.note = note;
@@ -24,11 +24,11 @@ public class NoteModel {
         this.id = id;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -7,4 +7,5 @@ import java.util.List;
 public interface NoteService {
 
     List<NoteModel> loadAllUserNotes(Long userId);
+    String createNote(NoteModel note, Long userId);
 }

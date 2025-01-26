@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS Users (
-    id int PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(20),
     password VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Notes (
-    id int PRIMARY KEY,
-    userId int,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userId BIGINT,
     title VARCHAR(50),
     note TEXT,
     FOREIGN KEY (userId) REFERENCES Users(id)

@@ -36,7 +36,7 @@ public class NoteDaoImpl implements NoteDao {
 
                 // apply the ResultSet to note fields
                 note.setId(rs.getInt("id"));
-                note.setUserId(rs.getInt("userID"));
+                note.setUserId(rs.getLong("userID"));
                 note.setTitle(rs.getString("title"));
                 note.setNote(rs.getString("note"));
 
@@ -47,5 +47,15 @@ public class NoteDaoImpl implements NoteDao {
         List<NoteModel> noteList = jdbcTemplate.query(sql, rowMapper, userID);
 
         return noteList;
+    }
+
+    @Override
+    public void saveNote(NoteModel note, Long userID) {
+
+        // create sql to save note to database
+        String sql = "INSERT INTO NOTES (userID, title, note) VALUES (?, ?, ?)";
+
+
+        jdbcTemplate.update(sql, userID, note.getTitle(), note.getNote());
     }
 }

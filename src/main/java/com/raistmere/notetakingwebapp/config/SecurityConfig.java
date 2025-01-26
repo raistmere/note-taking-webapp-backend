@@ -4,6 +4,7 @@ import com.raistmere.notetakingwebapp.dao.UserDaoImpl;
 import com.raistmere.notetakingwebapp.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -43,6 +44,7 @@ public class SecurityConfig {
 
             authReq.requestMatchers("/", "/login").permitAll();
             authReq.requestMatchers("/dashboard").authenticated();
+            authReq.requestMatchers(HttpMethod.POST, "/createnote").authenticated();
         });
 
         // formLogin filter rules
