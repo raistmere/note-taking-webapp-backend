@@ -1,5 +1,5 @@
-DELETE FROM Users;
-DELETE FROM Notes;
+-- DELETE FROM Notes;
+-- DELETE FROM Users;
 
 INSERT INTO Users(name, password) VALUES ('user', '$2a$12$1p.0D/V5ZDP.EJduZvUKi.2N5e9yGLz5Hficm7a49mNod9dzIPqfu');
 INSERT INTO Users(name, password)  VALUES  ('bunny', '$2a$12$tO.TE/U52rNwm0tJxkOU4un16/HzJfqgx3b/z3nsLhmHhg/.QJEzy');
