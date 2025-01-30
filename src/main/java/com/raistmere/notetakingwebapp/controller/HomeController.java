@@ -115,4 +115,35 @@ public class HomeController {
         // if everything is good and valid, then call note service for deletion
         return noteServiceImpl.deleteNoteById(noteId);
     }
+
+    @PostMapping("/editnote")
+    public String editNote(@RequestBody NoteDto requestBody) {
+
+        System.out.println("REQUEST BODY: " + requestBody);
+
+        System.out.println("Editing note with new changes...");
+
+        // get note (that is about to be edited) note id
+        long noteId = requestBody.getId();
+
+        // get current auth user id
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Long userId = userServiceImpl.getUserID(username);
+
+        // TODO: Should everything below be handled by noteServiceImpl instead of controller?
+        // check if note (that is about to be deleted) belongs to the auth user (prevents people from deleting other users notes)
+        NoteModel noteToBeEdited = noteServiceImpl.findNoteById(noteId);
+        if(noteToBeEdited == null) return "Failed to find note!";
+        if(!noteToBeEdited.getUserId().equals(userId)) return "Note does not belong to user!";
+
+        // create a new note model using requestBody data to overwrite the old note in the database
+        // we only want to edit the title and the note for now. There should not be any edit on the id, userId.
+        NoteModel noteModel = new NoteModel();
+        noteModel.setTitle(requestBody.getTitle());
+        noteModel.setNote(requestBody.getNote());
+
+        // if everything is good and valid, then call note service for deletion
+        return noteServiceImpl.editNoteById(noteId, noteModel);
+    }
 }

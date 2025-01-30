@@ -11,4 +11,5 @@ public interface NoteDao {
     List<NoteModel> getAllNotesFromUserID(Long userID);
     void saveNote(NoteModel note, Long userID);
     void deleteNoteById(long id);
+    void editNoteById(long id, NoteModel note);
 }

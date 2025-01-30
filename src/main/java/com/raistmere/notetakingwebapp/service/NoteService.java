@@ -10,4 +10,5 @@ public interface NoteService {
     List<NoteModel> loadAllUserNotes(Long userId);
     String createNote(NoteModel note, Long userId);
     String deleteNoteById(long noteId);
+    String editNoteById(long noteId, NoteModel note);
 }

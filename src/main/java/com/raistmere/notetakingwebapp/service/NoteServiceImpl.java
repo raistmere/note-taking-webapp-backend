@@ -9,18 +9,18 @@ import java.util.List;
 @Service
 public class NoteServiceImpl implements NoteService {
 
-    NoteDaoImpl noteDao;
+    NoteDaoImpl noteDaoImpl;
 
     public NoteServiceImpl(NoteDaoImpl noteDao) {
 
-        this.noteDao = noteDao;
+        this.noteDaoImpl = noteDao;
     }
 
     @Override
     public NoteModel findNoteById(long id) {
 
         System.out.println("Finding note by id: " + id);
-        return noteDao.getNoteById(id);
+        return noteDaoImpl.getNoteById(id);
     }
 
     // method that handles loading all user notes
@@ -28,7 +28,7 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteModel> loadAllUserNotes(Long userID) {
 
         // Get all notes from the database based on the userID
-        List<NoteModel> noteList = noteDao.getAllNotesFromUserID(userID);
+        List<NoteModel> noteList = noteDaoImpl.getAllNotesFromUserID(userID);
 
         // return note list to the controller
         return noteList;
@@ -40,7 +40,7 @@ public class NoteServiceImpl implements NoteService {
         // use DAO to save note to database
         try {
 
-            noteDao.saveNote(note, userID);
+            noteDaoImpl.saveNote(note, userID);
             System.out.println("Note has been created");
             return "Note has been created";
         } catch (Exception e) {
@@ -57,13 +57,30 @@ public class NoteServiceImpl implements NoteService {
 
         try {
 
-            noteDao.deleteNoteById(noteId);
+            noteDaoImpl.deleteNoteById(noteId);
             System.out.println("Note " + noteId + " has been deleted");
             return "Note has been deleted";
         } catch (Exception e) {
 
             System.out.println("There has been an error deleting the note");
             return "There has been an error deleting the note";
+        }
+    }
+
+    @Override
+    public String editNoteById(long noteId, NoteModel note) {
+
+        System.out.println("Editing note by id: " + noteId);
+
+        try {
+
+            noteDaoImpl.editNoteById(noteId, note);
+            System.out.println("Note " + noteId + " has been edited");
+            return "Note has been edited successfully";
+        } catch (Exception e) {
+
+            System.out.println("There has been an error editing the note");
+            return "There has been an error editing the note";
         }
     }
 }

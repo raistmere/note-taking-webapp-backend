@@ -97,5 +97,19 @@ public class NoteDaoImpl implements NoteDao {
         }
     }
 
+    @Override
+    public void editNoteById(long id, NoteModel note) {
+
+        String sql = "UPDATE NOTES SET title = ?, note = ? WHERE id = ?";
+
+        try {
+
+            jdbcTemplate.update(sql, note.getTitle(), note.getNote(), id);
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 }
