@@ -1,6 +1,8 @@
 package com.raistmere.notetakingwebapp.dao;
 
 import com.raistmere.notetakingwebapp.model.NoteModel;
+import com.raistmere.notetakingwebapp.model.UserModel;
+import org.springframework.data.relational.core.sql.SQL;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,28 @@ public class NoteDaoImpl implements NoteDao {
     public NoteDaoImpl(JdbcTemplate jdbcTemplate) {
 
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public NoteModel getNoteById(long id) {
+
+        String sql = "select * from notes where id = ?";
+
+        RowMapper<NoteModel> rowMapper = (rs, rowNum) -> {
+
+            NoteModel noteModel = new NoteModel();
+            noteModel.setId(rs.getInt("id"));
+            noteModel.setTitle(rs.getString("title"));
+            noteModel.setUserId(rs.getLong("userId"));
+            noteModel.setNote(rs.getString("note"));
+
+            return noteModel;
+        };
+
+        List<NoteModel> noteModelList = jdbcTemplate.query(sql, rowMapper, id);
+
+        return !noteModelList.isEmpty() ? noteModelList.getFirst() : null;
+
     }
 
     @Override
@@ -58,4 +82,20 @@ public class NoteDaoImpl implements NoteDao {
 
         jdbcTemplate.update(sql, userID, note.getTitle(), note.getNote());
     }
+
+    @Override
+    public void deleteNoteById(long id) {
+
+        String sql = "DELETE FROM NOTES WHERE id = ?";
+
+        try {
+
+            jdbcTemplate.update(sql, id);
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }

@@ -16,6 +16,13 @@ public class NoteServiceImpl implements NoteService {
         this.noteDao = noteDao;
     }
 
+    @Override
+    public NoteModel findNoteById(long id) {
+
+        System.out.println("Finding note by id: " + id);
+        return noteDao.getNoteById(id);
+    }
+
     // method that handles loading all user notes
     @Override
     public List<NoteModel> loadAllUserNotes(Long userID) {
@@ -40,6 +47,23 @@ public class NoteServiceImpl implements NoteService {
 
             System.out.println("There has been an error creating the note");
             return "There has been an error creating the note";
+        }
+    }
+
+    @Override
+    public String deleteNoteById(long noteId) {
+
+        System.out.println("Deleting note by id: " + noteId);
+
+        try {
+
+            noteDao.deleteNoteById(noteId);
+            System.out.println("Note " + noteId + " has been deleted");
+            return "Note has been deleted";
+        } catch (Exception e) {
+
+            System.out.println("There has been an error deleting the note");
+            return "There has been an error deleting the note";
         }
     }
 }

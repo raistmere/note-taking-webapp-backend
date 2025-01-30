@@ -45,6 +45,7 @@ public class SecurityConfig {
             authReq.requestMatchers("/", "/login").permitAll();
             authReq.requestMatchers("/dashboard").authenticated();
             authReq.requestMatchers(HttpMethod.POST, "/createnote").authenticated();
+            authReq.requestMatchers(HttpMethod.POST, "/deletenote").authenticated();
         });
 
         // formLogin filter rules
