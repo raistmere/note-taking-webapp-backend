@@ -10,12 +10,18 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Repository
 @Getter
 @Setter
 public class UserDaoImpl implements UserDao {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
     private JdbcTemplate jdbcTemplate;
 
@@ -44,6 +50,14 @@ public class UserDaoImpl implements UserDao {
         List<UserModel> userModelList = jdbcTemplate.query(sql, rowMapper, username);
 
         return !userModelList.isEmpty() ? userModelList.getFirst() : null;
+    }
+
+    @Override
+    public void saveUser(UserModel user) throws SQLException {
+
+        String sql = "INSERT INTO users (name, password) VALUES (?, ?)";
+
+        jdbcTemplate.update(sql, user.getName(), user.getPassword());
     }
 
     @Override

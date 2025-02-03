@@ -1,0 +1,23 @@
+<configuration>
+    <!-- Enable Jansi for color support -->
+    <configuration>
+        <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+    </configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                <!-- Logging Pattern -->
+                [%highlight(%-5level)[%yellow(%logger{1}:%line)] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <!-- Enable trace for specific packages (application.properties already enables it so this is useless?) -->
+    <logger name="org.springframework.security" level="TRACE"/>
+    <logger name="org.springframework.jdbc" level="TRACE"/>
+</configuration>

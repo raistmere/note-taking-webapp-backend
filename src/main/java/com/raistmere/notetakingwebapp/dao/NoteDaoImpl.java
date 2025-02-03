@@ -1,18 +1,23 @@
 package com.raistmere.notetakingwebapp.dao;
 
 import com.raistmere.notetakingwebapp.model.NoteModel;
-import com.raistmere.notetakingwebapp.model.UserModel;
-import org.springframework.data.relational.core.sql.SQL;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Repository
 public class NoteDaoImpl implements NoteDao {
+
+    private static final Logger logger = LoggerFactory.getLogger(NoteDaoImpl.class);
 
     JdbcTemplate jdbcTemplate;
 
@@ -93,7 +98,7 @@ public class NoteDaoImpl implements NoteDao {
             jdbcTemplate.update(sql, id);
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -107,7 +112,7 @@ public class NoteDaoImpl implements NoteDao {
             jdbcTemplate.update(sql, note.getTitle(), note.getNote(), id);
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 

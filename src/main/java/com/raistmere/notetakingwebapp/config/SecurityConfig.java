@@ -42,11 +42,9 @@ public class SecurityConfig {
         // authorize filter rules
         http.authorizeHttpRequests(authReq -> {
 
-            authReq.requestMatchers("/", "/login").permitAll();
+            authReq.requestMatchers("/", "/login", "/signup").permitAll();
             authReq.requestMatchers("/dashboard").authenticated();
-            authReq.requestMatchers(HttpMethod.POST, "/createnote").authenticated();
-            authReq.requestMatchers(HttpMethod.POST, "/deletenote").authenticated();
-            authReq.requestMatchers(HttpMethod.POST, "/editnote").authenticated();
+            authReq.requestMatchers(HttpMethod.POST, "/createnote", "/deletenote", "/editnote").authenticated();
         });
 
         // formLogin filter rules

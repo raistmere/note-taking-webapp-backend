@@ -1,13 +1,20 @@
 package com.raistmere.notetakingwebapp.service;
 
 import com.raistmere.notetakingwebapp.dao.NoteDaoImpl;
+
 import com.raistmere.notetakingwebapp.model.NoteModel;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class NoteServiceImpl implements NoteService {
+
+    private static final Logger logger = LoggerFactory.getLogger(NoteServiceImpl.class);
 
     NoteDaoImpl noteDaoImpl;
 
@@ -19,7 +26,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteModel findNoteById(long id) {
 
-        System.out.println("Finding note by id: " + id);
+        logger.info("Finding note by id: {}", id);
         return noteDaoImpl.getNoteById(id);
     }
 
@@ -41,11 +48,13 @@ public class NoteServiceImpl implements NoteService {
         try {
 
             noteDaoImpl.saveNote(note, userID);
-            System.out.println("Note has been created");
+            logger.info("Note has been created");
+
             return "Note has been created";
         } catch (Exception e) {
 
-            System.out.println("There has been an error creating the note");
+            logger.error("There has been an error creating the note");
+
             return "There has been an error creating the note";
         }
     }
@@ -53,16 +62,18 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public String deleteNoteById(long noteId) {
 
-        System.out.println("Deleting note by id: " + noteId);
+        logger.info("Deleting note by id: {}", noteId);
 
         try {
 
             noteDaoImpl.deleteNoteById(noteId);
-            System.out.println("Note " + noteId + " has been deleted");
+            logger.info("Note {} has been deleted", noteId);
+
             return "Note has been deleted";
         } catch (Exception e) {
 
-            System.out.println("There has been an error deleting the note");
+            logger.error("There has been an error deleting the note {}", noteId);
+
             return "There has been an error deleting the note";
         }
     }
@@ -71,15 +82,18 @@ public class NoteServiceImpl implements NoteService {
     public String editNoteById(long noteId, NoteModel note) {
 
         System.out.println("Editing note by id: " + noteId);
+        logger.info("Editing note by id: {}",noteId);
 
         try {
 
             noteDaoImpl.editNoteById(noteId, note);
-            System.out.println("Note " + noteId + " has been edited");
+            logger.info("Note {} has been edited", noteId);
+
             return "Note has been edited successfully";
         } catch (Exception e) {
 
-            System.out.println("There has been an error editing the note");
+            logger.error("There has been an error editing the note {}", noteId);
+
             return "There has been an error editing the note";
         }
     }

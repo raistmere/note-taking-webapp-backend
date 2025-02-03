@@ -2,13 +2,16 @@ package com.raistmere.notetakingwebapp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.raistmere.notetakingwebapp.dto.NoteDto;
 import com.raistmere.notetakingwebapp.model.NoteModel;
 import com.raistmere.notetakingwebapp.model.UserModel;
 import com.raistmere.notetakingwebapp.service.NoteServiceImpl;
 import com.raistmere.notetakingwebapp.service.UserServiceImpl;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController()
 public class HomeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     private final UserServiceImpl userServiceImpl;
     private final NoteServiceImpl noteServiceImpl;
@@ -32,6 +40,14 @@ public class HomeController {
     public String getHome() {
 
         return "Welcome to the Home Page";
+    }
+
+    @PostMapping("/signup")
+    public String signup(@RequestBody UserModel user) {
+
+        logger.info(user.toString());
+
+        return userServiceImpl.createUser(user);
     }
 
     @GetMapping("/dashboard")
@@ -50,7 +66,7 @@ public class HomeController {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(noteList);
 
-        System.out.println(json);
+        logger.info(json);
 
         return json;
     }
@@ -58,7 +74,7 @@ public class HomeController {
     @PostMapping("/createnote")
     public String createNote(@RequestBody NoteDto requestBody) {
 
-        System.out.println("REQUEST BODY: " + requestBody);
+        logger.info("REQUEST BODY: " + requestBody);
 
         // get user id so we can attach it to the new note;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +82,7 @@ public class HomeController {
         Long userId = userServiceImpl.getUserID(username);
 
         // create a new note model and use the requestBody to create a new note
-        System.out.println("Creating Note...");
+        logger.info("Creating Note...");
         NoteModel noteModel = new NoteModel();
         noteModel.setUserId(requestBody.getUserId());
         noteModel.setTitle(requestBody.getTitle());
@@ -97,7 +113,7 @@ public class HomeController {
     @PostMapping("/deletenote")
     public String deleteNote(@RequestBody NoteDto requestBody) {
 
-        System.out.println("REQUEST BODY: " + requestBody);
+        logger.info("REQUEST BODY: " + requestBody);
 
         // get note (that is about to be deleted) note id
         long noteId = requestBody.getId();
@@ -119,9 +135,9 @@ public class HomeController {
     @PostMapping("/editnote")
     public String editNote(@RequestBody NoteDto requestBody) {
 
-        System.out.println("REQUEST BODY: " + requestBody);
+        logger.info("REQUEST BODY: " + requestBody);
 
-        System.out.println("Editing note with new changes...");
+        logger.info("Editing note with new changes...");
 
         // get note (that is about to be edited) note id
         long noteId = requestBody.getId();
