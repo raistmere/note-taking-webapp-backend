@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
 
             userDaoImpl.saveUser(user);
             return "User created success!";
-        } catch(SQLException e) {
+        } catch(Exception e) {
 
-            logger.error("SQLException: {}",e.getMessage());
+            logger.error("Exception: {}",e.getMessage());
             return "User creation failed!";
         }
     }

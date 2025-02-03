@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void saveUser(UserModel user) throws SQLException {
+    public void saveUser(UserModel user) {
 
         String sql = "INSERT INTO users (name, password) VALUES (?, ?)";
 

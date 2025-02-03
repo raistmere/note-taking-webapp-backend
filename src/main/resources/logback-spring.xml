@@ -8,7 +8,7 @@
         <encoder>
             <pattern>
                 <!-- Logging Pattern -->
-                [%highlight(%-5level)[%yellow(%logger{1}:%line)] - %msg%n
+                [%highlight(%-5level)][%yellow(%logger{1}:%line)] - %msg%n
             </pattern>
         </encoder>
     </appender>
