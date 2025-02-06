@@ -1,4 +1,4 @@
-# note-taking-webapp-backend
-Spring Framework Project: Backend for a note taking webapp
+# Quill_Notes (Backend)
+## A Fullstack Note-taking App
 
-Testing github connection
+For Note-taking app frontend: [Link](https://github.com/raistmere/note-taking-webapp-frontend)
