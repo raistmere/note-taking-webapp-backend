@@ -9,5 +9,6 @@ public interface UserDao {
 
     UserModel getUserByUsername(String username);
     void saveUser(UserModel user) throws SQLException;
+    void updatePassword(Long userId, String password) throws SQLException;
     List<UserModel> getAllUsers();
 }

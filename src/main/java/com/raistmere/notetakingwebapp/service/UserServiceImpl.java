@@ -1,6 +1,7 @@
 package com.raistmere.notetakingwebapp.service;
 
 import com.raistmere.notetakingwebapp.dao.UserDaoImpl;
+import com.raistmere.notetakingwebapp.dto.ChangePasswordDto;
 import com.raistmere.notetakingwebapp.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,6 +54,25 @@ public class UserServiceImpl implements UserService {
 
             logger.error("Exception: {}",e.getMessage());
             return "User creation failed!";
+        }
+    }
+
+    @Override
+    public String changePassword(Long userID, ChangePasswordDto changePasswordDto) {
+
+        try{
+
+            // hash/crypt new password for database
+            String newPassword = passwordEncoder.encode(changePasswordDto.getNewPassword());
+
+            userDaoImpl.updatePassword(userID, newPassword);
+
+            logger.info("Password changed successfully!");
+            return "New password changed successfully!";
+        } catch(Exception e) {
+
+            logger.error("Exception: {}",e.getMessage());
+            return "New password change failed!";
         }
     }
 }

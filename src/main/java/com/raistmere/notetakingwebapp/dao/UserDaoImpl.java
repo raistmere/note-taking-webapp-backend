@@ -61,6 +61,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void updatePassword(Long userId, String password) throws SQLException {
+
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql, password, userId);
+    }
+
+    @Override
     public List<UserModel> getAllUsers() {
 
         String sql = "select * from users";

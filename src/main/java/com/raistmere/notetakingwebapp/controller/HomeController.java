@@ -3,6 +3,7 @@ package com.raistmere.notetakingwebapp.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.raistmere.notetakingwebapp.dto.ChangePasswordDto;
 import com.raistmere.notetakingwebapp.dto.NoteDto;
 import com.raistmere.notetakingwebapp.model.NoteModel;
 import com.raistmere.notetakingwebapp.model.UserModel;
@@ -65,8 +66,6 @@ public class HomeController {
         // convert to json
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(noteList);
-
-        logger.info(json);
 
         return json;
     }
@@ -161,5 +160,20 @@ public class HomeController {
 
         // if everything is good and valid, then call note service for deletion
         return noteServiceImpl.editNoteById(noteId, noteModel);
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+
+        logger.info("REQUEST BODY: " + changePasswordDto);
+
+        // TODO: We need to do some type of validation to check if user is authenticated and if they are the correct user. Use the oldPassword to validate.
+
+        // Get user info
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long userId = userServiceImpl.getUserID(userName);
+
+        // update password with new password from changePasswordDto
+        return userServiceImpl.changePassword(userId, changePasswordDto);
     }
 }
